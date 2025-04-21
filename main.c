@@ -19,7 +19,7 @@ int main()
     //%2d printa 2 casas
 
     int campo_matriz[TAM_1][TAM_2] = {VALOR_PADRAO};
-//    campo_matriz[2][2] = VALOR_BOMBA;
+    campo_matriz[2][5] = VALOR_BOMBA;
 //    campo_matriz[1][1] = VALOR_BOMBA;
     campo_matriz[1][6] = VALOR_BOMBA;
 
@@ -37,17 +37,17 @@ int main()
                    for(p=-1;p<2;p++){
                     printf("p = %2d    ",p);
                     printf("k = %2d    ",k);
-                    campo_matriz[i+k][j+p] = VALOR_PADRAO+1;
-                    int valor_p = campo_matriz[i+k][j+p];
-                    printf("Matriz + p = %d\n",valor_p);
+//                    campo_matriz[i+k][j+p] = VALOR_PADRAO+1;
+//                    int valor_p = campo_matriz[i+k][j+p];
+//                    printf("Matriz + p = %d\n",valor_p);
                     //se o valor nao for da bomba (valor central)
-//                     if (campo_matriz[i+k][j+p] != VALOR_BOMBA){
-////                     printf("valor i %d\n", i);
-////
-//                        campo_matriz[i+k][j+p] = campo_matriz[VALOR_PADRAO+1][VALOR_PADRAO+1];
-//                     }
-//                    printf("matriz ij = %d\n",campo_matriz[i+k][j+p]);
-//                    printf("matriz j %d\n",campo_matriz[j+p]);
+                    if (campo_matriz[i+k][j+p] != VALOR_BOMBA){
+//                      printf("valor i %d\n", i);
+//
+                        campo_matriz[i+k][j+p] = campo_matriz[i+k][j+p]+1;
+                       }
+//                      printf("matriz ij = %d\n",campo_matriz[i+k][j+p]);
+//                      printf("matriz j %d\n",campo_matriz[j+p]);
 //
 
                    }
