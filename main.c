@@ -1,18 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #define TAM_1 5
 #define TAM_2 8
 #define BASE 5
 #define VALOR_PADRAO 0
 #define VALOR_BOMBA 5
+
 //ctrl +shif + c Comenta
 //ctrl +shif + x descomenta
 int i = 0;
 int j = 0;
 int k = 0;
 int p = 0;
-
+int tamanho_matriz;
+int tamanho_elemento;
+int linha_jogador;
+int coluna_jogador;
+int porcentagem_de_bombas;
+int total_elementos;
 int main()
 {
     srand(time(NULL));
@@ -23,11 +30,20 @@ int main()
 //    campo_matriz[1][1] = VALOR_BOMBA;
     campo_matriz[1][6] = VALOR_BOMBA;
 
+    //TAMANHO TOTAL da MATRIZ
+    tamanho_matriz = sizeof(campo_matriz);
+    tamanho_elemento = sizeof(campo_matriz[0][0]);
+    total_elementos = tamanho_matriz/tamanho_elemento;
+    printf("Tamanho Matriz = %d  | ", total_elementos);
 
+    //CALCULO DE BOMBAS
+    total_elementos = ceil(total_elementos *0.15);
+    printf("15 Porcento de bombas = %d  | ", total_elementos);
 
     //identifica se é bomba
     for (i=0; i<TAM_1; i++)
     {
+
         for (j=0; j< TAM_2; j++)
         {
             if (campo_matriz[i][j] == VALOR_BOMBA){
@@ -61,10 +77,13 @@ int main()
         printf("\n");
     }
 
-
+    printf("\n");
     //printa matriz
+    printf("     1 2 3 4 5 6 7 8\n");
+    printf("     ---------------\n");
     for (i=0; i<TAM_1; i++)
     {
+    printf("%d  | ",i);
         for (j=0; j< TAM_2; j++)
         {
             // printf("entrou\n");
@@ -74,7 +93,13 @@ int main()
     }
 
 
-
+    printf("\n");
+    //identifica linha e coluna da jogada
+    printf("Digite a linha e coluna: \n");
+    scanf("%d", &linha_jogador);
+    printf("Digite a coluna: \n");
+    scanf("%d", &coluna_jogador);
+    printf("linha = %d coluna = %d",linha_jogador, coluna_jogador );
 
 //
 // for(k=-1;k<2;k++){
