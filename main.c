@@ -26,9 +26,9 @@ int main()
     //%2d printa 2 casas
 
     int campo_matriz[TAM_1][TAM_2] = {VALOR_PADRAO};
-//    campo_matriz[2][5] = VALOR_BOMBA;
+    campo_matriz[4][0] = VALOR_BOMBA;
     campo_matriz[2][7] = VALOR_BOMBA;
-//    campo_matriz[1][6] = VALOR_BOMBA;
+    campo_matriz[0][0] = VALOR_BOMBA;
 
     //TAMANHO TOTAL da MATRIZ
     tamanho_matriz = sizeof(campo_matriz);
@@ -81,7 +81,7 @@ int main()
 
                         if (campo_matriz[i+k][j+p]!= VALOR_BOMBA ){
 //                      printf("valor i %d\n", i);
-                            if (j+p >= TAM_2 ) {
+                            if (j+p >= TAM_2 || j+p < 0 ) {
                                     //&& (i+k && j+p < 0 )
                                  printf("ENTROU NA CONDICAO\n");
                                 continue;
