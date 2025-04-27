@@ -35,6 +35,8 @@ int printa_matriz_aberta();
 int printa_matriz_fechada();
 int printa_matriz_2();
 int verifica_vizinhos();
+int verifica_vitoria();
+int valor_vazios = 0;
 
 int campo_matriz[TAM_1][TAM_2] = {VALOR_PADRAO};
 int campo_matriz2[TAM_1][TAM_2] = {VALOR_TEMP};
@@ -103,6 +105,7 @@ int main()
         for (j=0; j< TAM_2; j++){
             //POPULA MATRIZ 2
             campo_matriz2[i][j] = VALOR_TEMP;
+//            valor_vazios = valor_vazios + 1;
             //---------------------------------------
             if (campo_matriz[i][j] == VALOR_BOMBA){
 //                printf("\n\nMatrizzzz == BOMBA %d\n", campo_matriz[i][j]);
@@ -180,6 +183,7 @@ while (jogando == 2){
         func_chama_linha();
 
         printf("linha = %d coluna = %d\n",linha_jogador, coluna_jogador );
+        printf("\n");
 
     //---------------------------------------
 
@@ -189,13 +193,16 @@ while (jogando == 2){
     }
     //AVALIA JOGADA
     chama_matriz_jogada();
-//    verifica_vizinhos();
+    verifica_vizinhos();
+
     printa_matriz_2();
-    printa_matriz_aberta();
+    verifica_vitoria();
+//    printa_matriz_aberta();
 
 } // finaliza o While do game loop
 
     return 0;
+
 }
 
 //---------------------------------------
@@ -246,7 +253,7 @@ int  func_chama_coluna(){
 }
 
 int printa_menu(){
-     printf("   --- O numero 9 significa BOMBA ---  \n\n");
+     printf("   --- para ver tabela descomente linha 200 ---  \n\n");
      printf(" \n");
 return 0;
 }
@@ -348,14 +355,8 @@ int chama_matriz_jogada(){
 
             for (i=0; i<TAM_1; i++)
             {
-//             if (i == linha_jogador) {
-//
-//             }
-//            printf("%d  | ",i);
                 for (j=0; j< TAM_2; j++)
                 {
-
-
 //                    if (j == coluna_jogador){
 ////                     printf("i = %d  | ",i);
 ////                     printf("j = %d  | ",j);
@@ -372,32 +373,18 @@ int chama_matriz_jogada(){
 //                     for (i=0; i<TAM_1; i++){
 //                        for (j=0; j< TAM_2; j++){
 //                        if(campo_matriz[linha_jogador][coluna_jogador] == )
-//                       // ESSE MAGIC NUMBER SIGNIFICA QUE FOI ABERTO O CARD
-////
-//
-//                        }
-//                     }
-
 //                        chama_endgame();
                     }
 //                    else{
 
-
-//                    if (campo_matriz[i][j]  == 0) {
-//                        printf("  | ");
-//                    }
-//                    else{
-//                        printf("  | ",campo_matriz[i][j]); //%d
-//                    }
                 }
-//                printf("\n   22  -------------------------------");
-//                printf("\n");
+
             }
 return 0;
 }
 
 int printa_matriz_2(){
-    printf("PRINTANTDO MATRIZ 2\n");
+//    printf("PRINTANTDO MATRIZ 2\n");
     printf("     0   1   2   3   4   5   6   7\n");
     printf("     -------------------------------\n");
     for (i=0; i<TAM_1; i++)
@@ -409,9 +396,11 @@ int printa_matriz_2(){
 
             if (campo_matriz2[i][j] == VALOR_TEMP) {
                 printf("  | " );
+
             }
             else{
                 printf("%d | ",campo_matriz2[i][j]);
+
             }
 
         }
@@ -425,20 +414,92 @@ int printa_matriz_2(){
 int verifica_vizinhos(){
     for (i=0; i<TAM_1; i++){
         for (j=0; j< TAM_2; j++){
-         if ( campo_matriz2[linha_jogador][coluna_jogador] == 0){
-           for(k=-1;k<2;k++){
-                for(p=-1;p<2;p++){
+             if ( campo_matriz2[linha_jogador][coluna_jogador] == 0){
+               for(k=-1;k<2;k++){
+                    for(p=-1;p<2;p++){
 
-                if(campo_matriz[i+k][j+p] == 0) {
-                    campo_matriz2[linha_jogador][coluna_jogador] == 0;
-                }
+                     if (coluna_jogador+p >=TAM_2){
+                          continue;
+                     }
+                     if (coluna_jogador+p < 0){
+                        continue;
+                     }
+                     if (linha_jogador+k < 0){
+                         continue;
+                     }
+                      if (linha_jogador+k >= TAM_1){
+                        continue;
+                     }
+
+
+                    if(campo_matriz[linha_jogador+k][coluna_jogador+p] != VALOR_BOMBA ) {
+                        campo_matriz2[linha_jogador+k][coluna_jogador+p] = campo_matriz[linha_jogador+k][coluna_jogador+p];
+//                             while (campo_matriz2[linha_jogador+k][coluna_jogador+p] == 0){
+//                                     if (coluna_jogador+p >=TAM_2){
+//                                        continue;
+//                                     }
+//                                     if (coluna_jogador+p < 0){
+//                                        continue;
+//                                     }
+//                                     if (linha_jogador+k < 0){
+//                                         continue;
+//                                     }
+//                                      if (linha_jogador+k >= TAM_1){
+//                                        continue;
+//                                     }
+//                             campo_matriz2[linha_jogador+k][coluna_jogador+p] = campo_matriz[linha_jogador+k][coluna_jogador+p];
+//                               return 0;
+//                           }
+//                    }
+//                 }
+               }
+
             }
-           }
-           return verifica_vizinhos();
-        }else {
-            return 0;
         }
     }
 }
+                    }
+
+
+return 0; //verifica_vizinhos();
+}
+
+//int verifica_vizinhos_recursivamente(){
+//
+//    if
+//
+//return verifica_vizinhos_recursivamente();
+//}
+
+int verifica_vitoria(){
+    valor_vazios = 0;
+//    printf("\nVALOR VAZIO = %d\n", valor_vazios);
+
+     for (i=0; i<TAM_1; i++){
+        for (j=0; j< TAM_2; j++){
+
+            if (campo_matriz2[i][j] == 7){
+
+                valor_vazios = valor_vazios+1;
+
+
+            }
+
+
+        }
+     }
+     valor_vazios = valor_vazios - total_elementos;
+//     printf("\nENTRO NO IF DO VALOR FAZIO = %d\n", valor_vazios);
+      if ( valor_vazios == 0){
+           printf("\n  -----------------------  \n");
+           printf("\n    PARABENS VC GANHOU!   \n");
+           jogando = jogando +1; //condição ok m pra sair do loop
+        return 0;
+
+    }
+
+
+
+
 return 0;
 }
