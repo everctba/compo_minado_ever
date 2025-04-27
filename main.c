@@ -7,6 +7,7 @@
 #define BASE 5
 #define VALOR_PADRAO 0
 #define VALOR_BOMBA 9
+#define VALOR_TEMP 7
 
 //ctrl +shif + c Comenta
 //ctrl +shif + x descomenta
@@ -32,9 +33,10 @@ int printa_menu();
 int chama_endgame();
 int printa_matriz_aberta();
 int printa_matriz_fechada();
+int printa_matriz_2();
 
 int campo_matriz[TAM_1][TAM_2] = {VALOR_PADRAO};
-
+int campo_matriz2[TAM_1][TAM_2] = {VALOR_TEMP};
 
 int main()
 {
@@ -93,15 +95,14 @@ int main()
         }
     }
 
-
 //---------------------------------------
-//COMEÇA O JOGO EM LOOP
-
-
 
     //identifica se é bomba
     for (i=0; i<TAM_1; i++) {
         for (j=0; j< TAM_2; j++){
+            //POPULA MATRIZ 2
+            campo_matriz2[i][j] = VALOR_TEMP;
+            //---------------------------------------
             if (campo_matriz[i][j] == VALOR_BOMBA){
 //                printf("\n\nMatrizzzz == BOMBA %d\n", campo_matriz[i][j]);
 //                printf("\nPosicao BOMBA =  %d e %d\n\n",i,j);
@@ -156,6 +157,10 @@ int main()
 
         }
 
+
+//---------------------------------------
+//COMEÇA O JOGO EM LOOP
+
 while (jogando == 2){
 
         printf("\n");
@@ -163,29 +168,26 @@ while (jogando == 2){
 
         printa_menu();
 
-
-        printa_matriz_fechada();
-
-    //    printa_matriz_aberta();
-
-
+//        printa_matriz_fechada();
+    //  printa_matriz_aberta();
         printf("\n");
-
 
     //---------------------------------------
 
-    //chama coluna e linha input usuario
+    //CHAMA CULUNA DE IMPUT DO USUARIO
         func_chama_coluna();
         func_chama_linha();
 
         printf("linha = %d coluna = %d\n",linha_jogador, coluna_jogador );
 
-
     //---------------------------------------
 
-    //    Caso a célula seja bomba
-        chama_endgame();
+    chama_endgame();
 
+    //AVALIA JOGADA
+    chama_matriz_jogada();
+    printa_matriz_2();
+    printa_matriz_aberta();
 
 } // finaliza o While do game loop
 
@@ -241,7 +243,7 @@ int  func_chama_coluna(){
 
 int printa_menu(){
     printf("   --- O numero 9 significa BOMBA ---  \n\n");
-
+     printf(" \n");
 return 0;
 }
 
@@ -249,8 +251,8 @@ return 0;
 //FIM DE GAME
 int chama_endgame(){
 
-    printf("Entrou no endgame\n");
-    printf("linha = %d coluna = %d\n",linha_jogador, coluna_jogador );
+//    printf("Entrou no endgame\n");
+//    printf("linha = %d coluna = %d\n",linha_jogador, coluna_jogador );
 
     if(campo_matriz[linha_jogador][coluna_jogador] == VALOR_BOMBA){
         printf("POSICAO DA MATRIZ = BOMBA\n");
@@ -273,11 +275,11 @@ return 0;
 }
 
  //---------------------------------------
-    //PRINTA MATRIZ FECHADA
+    //PRINTA MATRIZ ABERTA 1
  int  printa_matriz_aberta(){
 
     printf("     0   1   2   3   4   5   6   7\n");
-    printf("     -----------------------------\n");
+    printf("     -------------------------------\n");
     for (i=0; i<TAM_1; i++)
     {
     printf("%d  | ",i);
@@ -292,7 +294,7 @@ return 0;
             }
 
         }
-        printf("\n     -----------------------------");
+        printf("\n     -------------------------------");
         printf("\n");
     }
     return 0;
@@ -300,12 +302,12 @@ return 0;
 
 
  //---------------------------------------
-    //PRINTA MATRIZ FECHADA
+ //PRINTA MATRIZ FECHADA 1
 
 int printa_matriz_fechada(){
 
     printf("     0   1   2   3   4   5   6   7\n");
-    printf("     -----------------------------\n");
+    printf("     -------------------------------\n");
     for (i=0; i<TAM_1; i++)
     {
     printf("%d  | ",i);
@@ -316,12 +318,101 @@ int printa_matriz_fechada(){
                 printf("  | ");
             }
             else{
-                printf("%d | ",campo_matriz[i][j]);
+                printf("  | ",campo_matriz[i][j]); //%d
             }
         }
-        printf("\n     -----------------------------");
+        printf("\n     -------------------------------");
         printf("\n");
     }
 
   return 0;
+}
+
+int chama_matriz_jogada(){
+
+//            printf("     0   1   2   3   4   5   6   7\n");
+//            printf("     -------------------------------\n");
+            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
+            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
+            if ( campo_matriz[linha_jogador][coluna_jogador] != VALOR_BOMBA){
+                printf(" CAMPO DA MATRIZ e DIFERENTE DE BOMBA E VAMOS SUBSTITUIR\n");
+                campo_matriz2[linha_jogador][coluna_jogador] = campo_matriz[linha_jogador][coluna_jogador];
+            }
+            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
+            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
+
+
+            for (i=0; i<TAM_1; i++)
+            {
+//             if (i == linha_jogador) {
+//
+//             }
+//            printf("%d  | ",i);
+                for (j=0; j< TAM_2; j++)
+                {
+
+
+//                    if (j == coluna_jogador){
+////                     printf("i = %d  | ",i);
+////                     printf("j = %d  | ",j);
+//                    }
+////                printf(" campo_matriz = %d | ",campo_matriz[linha_jogador][coluna_jogador]);
+////                    if ( campo_matriz[linha_jogador][coluna_jogador] == VALOR_BOMBA){
+////                        printf("\n chamando endgame PELO CHAMA MATRIZ_JOGADA\n");
+////                        chama_endgame();
+//                    }
+//                    printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
+                    if ( campo_matriz[linha_jogador][coluna_jogador] != VALOR_BOMBA){
+//                     printf(" campo_matriz{valro jogada diferente de bomba!!!!!!!! = %d | ",campo_matriz[linha_jogador][coluna_jogador]);
+                        campo_matriz2[linha_jogador][coluna_jogador] == campo_matriz[linha_jogador][coluna_jogador];
+//                     for (i=0; i<TAM_1; i++){
+//                        for (j=0; j< TAM_2; j++){
+//                        if(campo_matriz[linha_jogador][coluna_jogador] == )
+//                       // ESSE MAGIC NUMBER SIGNIFICA QUE FOI ABERTO O CARD
+////
+//
+//                        }
+//                     }
+
+//                        chama_endgame();
+                    }
+//                    else{
+
+
+//                    if (campo_matriz[i][j]  == 0) {
+//                        printf("  | ");
+//                    }
+//                    else{
+//                        printf("  | ",campo_matriz[i][j]); //%d
+//                    }
+                }
+//                printf("\n   22  -------------------------------");
+//                printf("\n");
+            }
+return 0;
+}
+
+int printa_matriz_2(){
+    printf("PRINTANTDO MATRIZ 2\n");
+    printf("     0   1   2   3   4   5   6   7\n");
+    printf("     -------------------------------\n");
+    for (i=0; i<TAM_1; i++)
+    {
+
+    printf("%d  | ",i);
+        for (j=0; j< TAM_2; j++)
+        {
+
+            if (campo_matriz2[i][j] == VALOR_TEMP) {
+                printf("  | " );
+            }
+            else{
+                printf("%d | ",campo_matriz2[i][j]);
+            }
+
+        }
+        printf("\n     -------------------------------");
+        printf("\n");
+    }
+    return 0;
 }
