@@ -25,7 +25,7 @@ int numero_digitado_ok = 5;
 int jogando = 2;
 int porcentagem_bombas_input;
 float porcentagem_bombas;
-
+int pode_finalizar = 1;
 
 int func_chama_linha();
 int func_chama_coluna();
@@ -34,6 +34,7 @@ int chama_endgame();
 int printa_matriz_aberta();
 int printa_matriz_fechada();
 int printa_matriz_2();
+int verifica_vizinhos();
 
 int campo_matriz[TAM_1][TAM_2] = {VALOR_PADRAO};
 int campo_matriz2[TAM_1][TAM_2] = {VALOR_TEMP};
@@ -183,9 +184,12 @@ while (jogando == 2){
     //---------------------------------------
 
     chama_endgame();
-
+    if (pode_finalizar == 3){
+        continue;
+    }
     //AVALIA JOGADA
     chama_matriz_jogada();
+//    verifica_vizinhos();
     printa_matriz_2();
     printa_matriz_aberta();
 
@@ -242,7 +246,7 @@ int  func_chama_coluna(){
 }
 
 int printa_menu(){
-    printf("   --- O numero 9 significa BOMBA ---  \n\n");
+     printf("   --- O numero 9 significa BOMBA ---  \n\n");
      printf(" \n");
 return 0;
 }
@@ -260,11 +264,11 @@ int chama_endgame(){
         printf("\n ------------\n");
         printf("\n VOCE PERDEU!\n");
         printf("\n ------------\n");
-         printf("\n");
+        printf("\n");
         printa_matriz_aberta();
         //chama tela de derrota
         printf("\n VOCE PERDEU!\n");
-
+        pode_finalizar = 3;
         //SAI DO LOOP DO GAME WHILE
         jogando = jogando +1;
     }
@@ -332,14 +336,14 @@ int chama_matriz_jogada(){
 
 //            printf("     0   1   2   3   4   5   6   7\n");
 //            printf("     -------------------------------\n");
-            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
-            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
+//            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
+//            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
             if ( campo_matriz[linha_jogador][coluna_jogador] != VALOR_BOMBA){
-                printf(" CAMPO DA MATRIZ e DIFERENTE DE BOMBA E VAMOS SUBSTITUIR\n");
+//                printf(" CAMPO DA MATRIZ e DIFERENTE DE BOMBA E VAMOS SUBSTITUIR\n");
                 campo_matriz2[linha_jogador][coluna_jogador] = campo_matriz[linha_jogador][coluna_jogador];
             }
-            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
-            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
+//            printf(" campo_matriz1[linha_jogador][coluna_jogador] = %d | \n",campo_matriz[linha_jogador][coluna_jogador]);
+//            printf(" campo_matriz2[linha_jogador][coluna_jogador] = %d | \n",campo_matriz2[linha_jogador][coluna_jogador]);
 
 
             for (i=0; i<TAM_1; i++)
@@ -415,4 +419,26 @@ int printa_matriz_2(){
         printf("\n");
     }
     return 0;
+}
+
+
+int verifica_vizinhos(){
+    for (i=0; i<TAM_1; i++){
+        for (j=0; j< TAM_2; j++){
+         if ( campo_matriz2[linha_jogador][coluna_jogador] == 0){
+           for(k=-1;k<2;k++){
+                for(p=-1;p<2;p++){
+
+                if(campo_matriz[i+k][j+p] == 0) {
+                    campo_matriz2[linha_jogador][coluna_jogador] == 0;
+                }
+            }
+           }
+           return verifica_vizinhos();
+        }else {
+            return 0;
+        }
+    }
+}
+return 0;
 }
