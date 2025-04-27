@@ -48,7 +48,7 @@ int main()
     printf("\n");
 //---------------------------------------
 //    BOMBAS FIXADAS!
-    campo_matriz[0][0] = VALOR_BOMBA;
+    campo_matriz[4][0] = VALOR_BOMBA;
     campo_matriz[2][7] = VALOR_BOMBA;
 //    campo_matriz[0][0] = VALOR_BOMBA;
 
@@ -89,7 +89,8 @@ int main()
         for (j=0; j< TAM_2; j++)
         {
             if (campo_matriz[i][j] == VALOR_BOMBA){
-                printf("\nmatriz %d\n", campo_matriz[i][j]);
+                printf("\n\nMatrizzzz == BOMBA %d\n", campo_matriz[i][j]);
+                 printf("\nPosicao BOMBA =  %d e %d\n\n",i,j);
 
                 for(k=-1;k<2;k++){
                    for(p=-1;p<2;p++){
@@ -111,10 +112,26 @@ int main()
 //                        AVALIA OS VIZINHOS DA BOMBA
                         int temp_k = i+k;
                         int temp_p = j+p;
+
+                        // SE FOR DIFERENTE DE BOMBA
                         if (campo_matriz[temp_k][temp_p]!= VALOR_BOMBA ){
 
                             printf("valor i+k %d\n",temp_k);
                             printf("valor j+p %d\n",temp_p);
+                            // se for maior que 7 colunas pula
+                            if (temp_p >=TAM_2){
+                                continue;
+                            }
+                            if (temp_p < 0){
+                                continue;
+                            }
+                            if (temp_k < 0){
+                                continue;
+                            }
+                             if (temp_k >= TAM_1){
+                                continue;
+                            }
+                            // SOMA 1 AO CAMPO AO REDOR DA BOMBA
                             campo_matriz[i+k][j+p] = campo_matriz[i+k][j+p]+1;
 
                            //---------------------------------------
@@ -132,8 +149,7 @@ int main()
 //                                }
 //                            }
                         }
-                          if (campo_matriz[temp_k][temp_p]== VALOR_BOMBA )
-                            {
+                          if (campo_matriz[temp_k][temp_p]== VALOR_BOMBA ) {
                                  continue;
 //                                campo_matriz[i+k][j+p] = campo_matriz[i+k][j+p]+1;
                             }
